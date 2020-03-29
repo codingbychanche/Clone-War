@@ -3,7 +3,7 @@
 # Compare two binary files.
 #
 # BF 2018
-# Version 1.1
+# Version 1.2
 
 
 duplicates=0
@@ -22,7 +22,7 @@ echo Creating directory for duplicates....
 mkdir $dupdir
 
 # Remove old 'dup_List' file where all previous attempts are logged..
-if [ -f $log ]
+if [ -f "$log" ]
 then
     rm $log
     echo Old log- files removed...
@@ -35,7 +35,9 @@ fi
 # structure may be damaged! This is true for all other hidden config- files...
 
 start=`date`
-echo "$(find . -name \*.jpg)" > result   # Change search pattern, currently only files with 'jpg' extension are checked!
+
+#Adjust search pattern at your will.
+echo "$(find . -name '*' | egrep "(.jpg)|(.JPG)|(.mp3)|(.dmg)|(.pdf)")" > result   
 
 # Begin checking...
 while read a
@@ -71,7 +73,7 @@ do
 			# Move duplicate into "quarantaine"
 			#
 			# This is compulsory!If we leave the file as it is,
-			# during the further  it would be compared recursively thus,
+			# further on  it would be compared recursively thus,
 			# leading to wrong results........
 
 			mv "$i" ./dupDir
